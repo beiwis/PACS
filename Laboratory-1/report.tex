@@ -1,0 +1,147 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[table,xcdraw]{xcolor}
+\usepackage[margin=1in, top=0.5in]{geometry} % Adjusts the top margin
+\usepackage{caption}        % For capturing images and tables
+\usepackage{subcaption}     % For subfigures
+
+\title{\textbf{Laboratory 1. Getting Started: Environment, Command Line, Compiling, Debugging, and Programming Basics}}
+\author{Beatriz Rosell Cortés \\
+María Peribáñez Tafalla}
+\date{September 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Performance Evaluation of Matrix Multiplication Versions}
+
+\subsection{Standard Matrix Multiplication}
+The standard algorithm for multiplying two N×N matrices is straightforward but inefficient for large matrices due to its cubic complexity. Our implementation uses static memory allocation, which avoids runtime overhead but lacks flexibility for varying matrix sizes.
+
+\subsection{Eigen Math Library}
+The Eigen math library provides optimized matrix multiplication routines using techniques like cache optimization, SIMD, and block matrix multiplication. It uses dynamic memory allocation, which introduces some overhead but offers significant performance benefits for large matrices.
+
+\subsection{Execution Times}
+\begin{figure}[ht]
+\centering
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |l|l|l|}
+\hline
+\cellcolor[HTML]{DAE8FC}Normal & \cellcolor[HTML]{C0C0C0}Real (s) & \cellcolor[HTML]{C0C0C0}User (s) & \cellcolor[HTML]{C0C0C0}Sys (s) \\ \hline
+2000x2000                      & 41.032                       & 39.624                       & 0.078                       \\ \hline
+1000x1000                      & 4.851                        & 4.571                        & 0.025                       \\ \hline
+500x500                        & 0.664                        & 0.5781                      & 0.008                       \\ \hline
+100x100                        & 0.017                        & 0.007                        & 0.001                       \\ \hline
+5x5                            & 0.003                        & 0.000                        & 0.001                       \\ \hline
+\end{tabular}
+\caption{Standard Matrix Multiplication}
+\label{Recorteizq}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.45\textwidth}
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |l|l|l|}
+\hline
+\cellcolor[HTML]{DAE8FC}Eigen & \cellcolor[HTML]{C0C0C0}Real (s) & \cellcolor[HTML]{C0C0C0}User (s) & \cellcolor[HTML]{C0C0C0}Sys (s) \\ \hline
+2000x2000                     & 3.568                        & 2.139                        & 0.085                       \\ \hline
+1000x1000                     & 0.708                        & 0.328                        & 0.025                       \\ \hline
+500x500                       & 0.113                        & 0.058                        & 0.005                       \\ \hline
+100x100                       & 0.014                        & 0.002                        & 0.001                       \\ \hline
+5x5                           & 0.003                        & 0.000                        & 0.001                       \\ \hline
+\end{tabular}
+\caption{Eigen Math Library}
+\label{Recortedch}
+\end{subfigure}
+\caption{Execution times for both coded versions varying the NxN matrix sizes.}
+\label{Recortes}
+\end{figure}
+
+\subsection{Experimental Setup and Statistical Analysis}
+Each experiment was run 10 times to mitigate spurious results. The tables below report the number of runs, mean values, and standard deviation for each matrix size.
+
+\begin{table}[h]
+\centering
+\caption{Standard Matrix Multiplication - Execution Times (10 runs)}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\cellcolor[HTML]{DAE8FC}Normal    & t1          & t2       & t3       & t4       & t5       & t6       & t7       & t8       \\ \hline
+\cellcolor[HTML]{EFEFEF}2000x2000 & 1min 6.321s & 1m7.283s & 1m6.735s & 1m6.643s & 1m7.273s & 1m1.364s & 1m7.189s & 1m6.815s \\ \hline
+\cellcolor[HTML]{EFEFEF}1000x1000 & 7.565       & 7.574    & 7.567    & 7.579    & 7.565    & 7.561    & 7.558    & 7.551    \\ \hline
+\cellcolor[HTML]{EFEFEF}500x500   & 0.258       & 0.258    & 0.261    & 0.265    & 0.266    & 0.260    & 0.255    & 0.259    \\ \hline
+\cellcolor[HTML]{EFEFEF}100x100   & 0.005       & 0.005    & 0.005    & 0.004    & 0.003    & 0.006    & 0.005    & 0.004    \\ \hline
+\cellcolor[HTML]{EFEFEF}5x5       & 0.001       & 0.001    & 0.000    & 0.000    & 0.001    & 0.001    & 0.001    & 0.002    \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Standard Matrix Multiplication - Mean and Standard Deviation}
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |l|l|}
+\hline
+\cellcolor[HTML]{DAE8FC}Normal & \cellcolor[HTML]{C0C0C0}Mean & \cellcolor[HTML]{C0C0C0}Standard deviation \\ \hline
+2000                           & 66.2029                      & 1.85622                                    \\ \hline
+1000                           & 7.565                        & 0.00823104                                 \\ \hline
+500                            & 0.26025                      & 0.00345507                                 \\ \hline
+100                            & 0.004625                     & 0.000856957                                \\ \hline
+5                              & 0.000875                     & 0.000599479                                \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Eigen Math Library - Execution Times (10 runs)}
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\cellcolor[HTML]{DAE8FC}Eigen & t1    & t2    & t3    & t4    & t5    & t6    & t7    & t8     \\ \hline
+\cellcolor[HTML]{EFEFEF}2000  & 3.753 & 3.808 & 3.788 & 3.786 & 3.825 & 3.835 & 3.818 & 3.862s \\ \hline
+\cellcolor[HTML]{EFEFEF}1000  & 0.618 & 0.637 & 0.670 & 0.623 & 0.623 & 0.621 & 0.630 & 0.629  \\ \hline
+\cellcolor[HTML]{EFEFEF}500   & 0.112 & 0.118 & 0.119 & 0.123 & 0.120 & 0.120 & 0.125 & 0.118  \\ \hline
+\cellcolor[HTML]{EFEFEF}100   & 0.004 & 0.005 & 0.005 & 0.002 & 0.003 & 0.005 & 0.004 & 0.003  \\ \hline
+\cellcolor[HTML]{EFEFEF}5     & 0.001 & 0.000 & 0.001 & 0.001 & 0.001 & 0.001 & 0.000 & 0.002  \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\centering
+\caption{Eigen Math Library - Mean and Standard Deviation}
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |l|l|}
+\hline
+\cellcolor[HTML]{DAE8FC}Eigen & \cellcolor[HTML]{C0C0C0}Mean & \cellcolor[HTML]{C0C0C0}Standard deviation \\ \hline
+2000                          & 3.80938                      & 0.0314799                                  \\ \hline
+1000                          & 0.631375                     & 0.015644                                   \\ \hline
+500                           & 0.119375                     & 0.00360338                                 \\ \hline
+100                           & 0.003875                     & 0.00105327                                 \\ \hline
+5                             & 0.000875                     & 0.000599479                                \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Discussion on Computational Complexity}
+Both the standard matrix multiplication and Eigen's optimized multiplication have a computational complexity of \(O(N^3)\). However, Eigen's optimizations make it significantly faster in practice.
+
+\subsection{Memory Allocation Policy Justification}
+Static memory allocation, used in the standard matrix multiplication, is suitable for fixed-size matrices but lacks flexibility. Dynamic memory allocation, used in Eigen, provides flexibility and is essential for handling large and varying matrix sizes efficiently.
+
+\subsection{Time Command Metrics Analysis}
+The time command reports three metrics: real, user, and system times. User time provides a good indication of the efficiency and effectiveness of each method in terms of CPU usage.
+
+\subsection{Additional Considerations}
+- Performance Comparison on Different Machines: Running the experiments on different machines can provide insights into hardware-specific optimizations.
+- Compiler Optimizations: Experimenting with different compiler optimization flags can reveal the impact of compiler optimizations.
+- Stressing the CPU: Running other program instances simultaneously can help understand the impact of CPU load on the performance of the matrix multiplication algorithms.
+
+\begin{figure}[h] 
+    \centering 
+    \includegraphics[width=0.8\textwidth]{Figure_1.png} 
+    \caption{Graphical representation of execution times for both coded versions varying the NxN matrix sizes.}
+    \label{fig:mi_imagen} 
+\end{figure}
+
+\end{document}
